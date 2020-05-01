@@ -319,7 +319,6 @@ C语言区分大小写，也就是说，在标识符中C语言区别大写字母
 |    do    |   int    |  switch   |             |
 |  double  |   long   |  typedef  |             |
 |   else   | register |   union   |             |
-||
 *仅C99有
 
 ## 2.8 C程序的书写规范

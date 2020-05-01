@@ -166,5 +166,183 @@ printf("Brevity is the soul of wit.\n  --Shakespeare\n");
 // This is a comment
 ```
 
-新的注释风格有两个主要优点：首先，因为注释会在行末自动终止，所以不会出现未终止的
+新的注释风格有两个主要优点：首先，因为注释会在行末自动终止，所以不会出现未终止的注释意外吞噬部分程序的情况；其次，因为每行前面都必须有`//`，所以多行的注释更加醒目。
+
+## 2.4 变量和赋值
+
+在程序执行过程中有一种临时存储数据的方法，C语言中的这类存储单元被称为***变量***（variable）
+
+### 2.4.1 类型
+
+每一个变量都必须有一个***类型***（type）。类型用来说明变量所存储的数据的种类。C语言拥有广泛多样的类型。由于类型会影响变量的存储方式以及允许对变量进行的操作，所以选择合适的类型是非常关键的。
+
+### 2.4.2 声明
+
+在使用变量之前必须对其***声明***（为编译器所做的描述）。为了声明变量，首先要指定变量的类型，然后说明变量的名字。例如，我们可能这样声明变量`height`和`profit`：
+
+```c
+int height;
+float profit;
+```
+
+如果几个变量具有相同的类型，就可以把它们的声明合并：
+
+```c
+int height, length, width, volume;
+float profit, loss;
+```
+
+### 2.4.3 赋值
+
+变量通过***赋值***（assignment）的方式获得值。例如，语句：
+
+```c
+height = 8;
+length = 12;
+width = 10; //8、12、和10称为常量（constant）
+```
+
+变量在赋值或以其他方式使用之前必须先声明。
+
+```c
+int height;
+height = 8;
+```
+
+赋值给`float`型变量的常量通常都带小数点。例如，如果`profit`是一个`float`型的变量，可能会这样对其赋值：
+
+```c
+profit = 2150.48;
+```
+
+当我们把一个包含小数点的常量赋值给`float`型变量时，最好在该常量后面加一个字母`f`（代表`float`)：
+
+```c
+profit = 2150.48f;
+```
+
+通常情况下，赋值运算的右侧可以是一个含有常量、变量和运算符的公式（在C语言的术语中称为***表达式***）。
+
+```c
+height = 8;
+length = 12;
+width = 10;
+volume = height * length * width; /* volume is now 960 */
+```
+
+### 2.4.4 显示变量的值
+
+用`printf`可以显示出变量的值。
+
+```c
+printf("Height: %d\n", height); //占位符%d用来指明在显示过程中变量height的值的显示位置
+```
+
+C语言没有限制调用一次`printf`可以显示的变量的数量。为了同时显示变量`height`和变量`length`的值，可以使用下面的`printf`调用语句：
+
+```c
+printf("Height: %d Length: %d\n", height, length);
+```
+
+### 2.4.5 初始化
+
+当程序开始执行时，某些变量会被自动设置为零，而大多数变量则不会。没有默认值并且尚未在程序中被赋值的变量是***未初始化的***（uninitialized）。
+
+例如，可以在一步操作中声明变量`height`并同时对其进行初始化：
+
+```c
+int height = 8;
+```
+
+按照C语言的术语，数值8是一个***初始化式***（initializer）。
+
+### 2.4.6 显示表达式的值
+
+`printf`的功能不局限于显示变量中存储的数，它可以显示任意数值表达式的值。例如语句
+
+```c
+volume = height * length * width;
+printf("%d\n", volume);
+```
+
+可以用以下形式代替：
+
+```c
+printf("%d\n", height * length * width);
+```
+
+`printf`显示表达式的能力说明了C语言的一个通用原则：在任何需要数值的地方，都可以使用具有相同类型的表达式。
+
+## 2.5 读入输入
+
+`scanf`函数和`printf`函数都需要使用***格式串***（format string）来指定输入或输出数据的形式。
+
+为了读入一个`int`值，可以使用下面的`scanf`函数调用：
+
+```c
+scanf("%d", &i);	/* reads an integer; stores into i */
+```
+
+## 2.6 定义常量的名字
+
+当程序含有常量时，建议给这些常量命名。可以采用成为***宏定义***（macro definition）的特性给常量命名：
+
+```c
+#define INCHES_PER_POUND 166
+```
+
+还可以利用宏来定义表达式
+
+```c
+#define RECIPROCAL_OF_PI (1.0f / 3.14159f)
+```
+
+当宏包含运算符时，必须用括号把表达式括起来。
+
+## 2.7 标识符
+
+在编写程序时，需要对变量、函数、宏和其他实体进行命名。这些名字成为***标识符***（identifier）。在C语言中，标识符可以含有字母、数字和下划线，但是必须以字母或者下划线开头。
+
+C语言区分大小写，也就是说，在标识符中C语言区别大写字母和小写字母。
+
+**关键字**
+
+|  |      |  |     |
+| :------: | :------: | :-------: | :---------: |
+|   auto   |   enum   | restrict* |  unsigned   |
+|  break   |  extern  |  return   |    void     |
+|   case   |  float   |   short   |  volatile   |
+|   char   |   for    |  signed   |    while    |
+|  const   |   goto   |  sizeof   |   _Bool*    |
+| continue |    if    |  static   |  _Complex*  |
+| default  | inline*  |  struct   | _Imaginary* |
+|    do    |   int    |  switch   |             |
+|  double  |   long   |  typedef  |             |
+|   else   | register |   union   |             |
+||
+*仅C99有
+
+## 2.8 C程序的书写规范
+
+我们可以把C程序看成是一连串***记号***（token），即许多在不改变意思的基础上无法再分割的字符组。标识符和关键字都是记号。像`+`和`-`这样的运算符、逗号和分号这样的标点符号以及字符串字面量，也都是记号。
+
+
+
+语句可以分开放在任意多行内。例如，下面的语句非常长，很难将它压缩在一行内。
+
+```c
+printf("Dimensional weight (pounds): %d\n",
+      (volume + INCHES_PER_POUND - 1) / INCHES_PER_POUND);
+```
+
+记号间的空格使我们更容易区分记号。基于这个原因，通常会在每个运算符的前后都放上一个空格：
+
+```c
+volume = height * length * width;
+```
+
+缩进有助于轻松识别程序嵌套。例如，为了清晰地表示出声明和语句都嵌套在`main`函数中，应该对它们进行缩进。
+
+空行可以把程序划分成逻辑单元，从而使读者更容易辨别程序的结构。就像没有章节的书一样，没有空行的程序很难阅读。
+
 
